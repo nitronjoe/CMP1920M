@@ -6,18 +6,57 @@ using System.Threading.Tasks;
 
 namespace CMP1920M
 {
-    internal class Game
+    internal class Game : GameBase
     {
-        private Die die;
-        private Statistics statistics;
-
-        public Game()
+        public Game() : base()
         {
-            die = new Die();
-            statistics = new Statistics();
         }
 
-        public void InstantiateSevensOut()
+        public override void Play()
+        {
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("Main Menu:");
+                Console.WriteLine("1. Sevens Out Game");
+                Console.WriteLine("2. Three or More Game");
+                Console.WriteLine("3. View Statistics");
+                Console.WriteLine("4. Perform Testing");
+                Console.WriteLine("5. Exit");
+
+                Console.Write("\nEnter your choice: ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        InstantiateSevensOut();
+                        break;
+                    case "2":
+                        InstantiateThreeOrMore();
+                        break;
+                    case "3":
+                        ViewStatisticsData();
+                        break;
+                    case "4":
+                        PerformTests();
+                        break;
+                    case "5":
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
+
+                if (exit)
+                {
+                    break;
+                }
+            }
+        }
+
+        private void InstantiateSevensOut()
         {
             Console.WriteLine("Sevens Out Game:");
 
@@ -74,7 +113,7 @@ namespace CMP1920M
             }
         }
 
-        public void InstantiateThreeOrMore()
+        private void InstantiateThreeOrMore()
         {
             Console.WriteLine("Three or More Game:");
 
@@ -138,70 +177,31 @@ namespace CMP1920M
         }
 
 
-        public void ViewStatisticsData()
+        private void ViewStatisticsData()
         {
             Console.WriteLine("Statistics:");
             statistics.DisplayStatistics();
             // Display statistics data for each game type
         }
 
-        public void PerformTests()
+        private void PerformTests()
         {
             Console.WriteLine("Testing:");
             Testing testing = new Testing();
             testing.TestSevensOut();
             testing.TestThreeOrMore();
-            Console.WriteLine("Tests completed.");
+            Console.WriteLine("Tests completed."); // This line should be executed after the tests
         }
 
-        public void MainMenu()
+        private void MainMenu()
         {
-            bool exit = false;
-            while (!exit)
-            {
-                Console.WriteLine("Main Menu:");
-                Console.WriteLine("1. Sevens Out Game");
-                Console.WriteLine("2. Three or More Game");
-                Console.WriteLine("3. View Statistics");
-                Console.WriteLine("4. Perform Testing");
-                Console.WriteLine("5. Exit");
-
-                Console.Write("\nEnter your choice: ");
-                string choice = Console.ReadLine();
-
-                switch (choice)
-                {
-                    case "1":
-                        InstantiateSevensOut();
-                        break;
-                    case "2":
-                        InstantiateThreeOrMore();
-                        break;
-                    case "3":
-                        ViewStatisticsData();
-                        break;
-                    case "4":
-                        PerformTests();
-                        break;
-                    case "5":
-                        exit = true;
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice. Please try again.");
-                        break;
-                }
-
-                if (exit)
-                {
-                    break;
-                }
-            }
+            Play();
         }
 
         public static void Main(string[] args)
         {
             Game game = new Game();
-            game.MainMenu();
+            game.Play();
         }
     }
 }
